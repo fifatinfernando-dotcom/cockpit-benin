@@ -9,8 +9,8 @@ function Layout({ children }) {
 
       <style>{`
         .mobile-topbar { display: none; }
-        .sidebar-wrap { position: relative; }
         .mobile-overlay { display: none; }
+        .sidebar-wrap { display: flex; }
 
         @media (max-width: 768px) {
           .mobile-topbar {
@@ -30,10 +30,9 @@ function Layout({ children }) {
             height: 100vh;
             transition: left 0.3s ease;
             z-index: 99;
+            display: flex !important;
           }
-          .sidebar-wrap.open {
-            left: 0 !important;
-          }
+          .sidebar-wrap.open { left: 0 !important; }
           .mobile-overlay {
             display: block !important;
             position: fixed;
@@ -41,13 +40,7 @@ function Layout({ children }) {
             background: rgba(0,0,0,0.5);
             z-index: 98;
           }
-          .main-content {
-            padding-top: 56px;
-            width: 100%;
-          }
-          .desktop-sidebar {
-            display: none !important;
-          }
+          .main-content { padding-top: 56px; }
         }
       `}</style>
 
@@ -75,14 +68,9 @@ function Layout({ children }) {
         />
       )}
 
-      {/* Sidebar mobile */}
+      {/* Sidebar — une seule ! */}
       <div className={`sidebar-wrap ${menuOuvert ? "open" : ""}`}>
         <Sidebar onClose={() => setMenuOuvert(false)} />
-      </div>
-
-      {/* Sidebar desktop */}
-      <div className="desktop-sidebar">
-        <Sidebar />
       </div>
 
       {/* Contenu principal */}
