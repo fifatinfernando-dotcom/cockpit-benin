@@ -125,7 +125,11 @@ function App() {
   useEffect(() => {
     async function verifierAPI() {
       try {
-        const res = await fetch(import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace("/api", "") : "http://127.0.0.1:8000/");
+        const res = await fetch(
+          import.meta.env.VITE_API_URL
+            ? import.meta.env.VITE_API_URL.replace("/api", "")
+            : "http://127.0.0.1:8000/"
+        );
         if (res.ok) {
           setTimeout(() => setPret(true), 1500);
         } else {
@@ -136,6 +140,16 @@ function App() {
       }
     }
     verifierAPI();
+  }, []);
+
+  useEffect(() => {
+    const ping = () => {
+      fetch("https://cockpit-benin-api.onrender.com/")
+        .catch(() => {});
+    };
+    ping();
+    const intervalle = setInterval(ping, 10 * 60 * 1000);
+    return () => clearInterval(intervalle);
   }, []);
 
   if (!pret) return <EcranChargement />;
