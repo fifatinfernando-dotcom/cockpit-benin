@@ -3,7 +3,9 @@ import CarteKpi from "../components/kpi/CarteKpi";
 import ListeCentrales from "../components/kpi/ListeCentrales";
 import ListeAlertes from "../components/alertes/ListeAlertes";
 import GraphiqueProduction from "../components/charts/GraphiqueProduction";
-import { getKpis, getCentrales, getAlertes } from "../services/api";
+import { getCentrales, getAlertes } from "../services/api";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api";
 
 function Dashboard() {
   const [centrales, setCentrales] = useState([]);
@@ -16,7 +18,7 @@ function Dashboard() {
   useEffect(() => {
     async function chargerDonnees() {
       try {
-        const res = await fetch("http://127.0.0.1:8000/api/production/kpis");
+        const res = await fetch(`${BASE_URL}/production/kpis`);
         const k = await res.json();
         const c = await getCentrales();
         const a = await getAlertes();
